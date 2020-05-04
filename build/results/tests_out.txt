@@ -1,6 +1,16 @@
-Breakpoint 1 at 0x12a: file source/main.c, line 21.
+Breakpoint 1 at 0x34e: file source/main.c, line 158.
 Note: automatically using hardware breakpoints for read-only addresses.
-Quit
-Quit
-Quit
-Remote connection closed
+======================================================
+Running all tests..."
+
+"PINA 0x01 => PORTC: 0x08, state: sq_1_2"...$1 = Start
+$2 = sq_1_2
+"PINA 0x01 => PORTB: 0x08, state: increment"...$3 = sq_1_2
+$4 = 42 '*'
+$5 = sq_2_3
+
+	Expected 0x08 
+	PORTB '0x800025:	0x0c
+test/tests.gdb:52: Error in sourced command file:
+No symbol "increment" in current context.
+Remote doesn't know how to detach
