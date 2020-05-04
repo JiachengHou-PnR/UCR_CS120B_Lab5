@@ -26,32 +26,85 @@
 echo ======================================================\n
 echo Running all tests..."\n\n
 
-test "PINA: 0 => PORTC: 0x40"
-setPINA 0
+test "PINA 0x01 => PORTC: 0x08, state: increment"
+
+set state = init
+
+print state
+setPINA 0x01
 continue 2
-expectPORTC 0x40
+
+print state
+expectPORTC 0x08
+expect state increment
 checkResult
 
-test "PINA: 2 => PORTC: 0x60"
-setPINA 2
+# Test sequence continue !A1 && A0 => PORTC: 0x08
+test "PINA 0x01 => PORTC: 0x08, state: increment"
+
+print state
+setPINA 0x01
 continue 2
-expectPORTC 0x60
+
+print state
+expectPORTC 0x08
+expect state increment
 checkResult
 
-test "PINA: 13 => PORTC: 0x3F"
-setPINA 13
+# Test sequence from init: A1 && A0 => PORTC: 0x00
+test "PINA 0x03 => PORTC: 0x00, state: reset"
+
+set state = init
+
+print state
+setPINA 0x03
 continue 2
-expectPORTC 0x3F
+
+print state
+expectPORTC 0x00
+expect state reset
 checkResult
 
-#test "PINA: 0x01, PINB: 0x10 => PORTC: 0x02"
-#setPINA 0x01
-#setPINB 0x10
-#continue 2
-#expectPORTC 0x02
-#checkResult
+# Test sequence from init: (!A1 && A0) * 2, (!A1 && !A0), (!A1 && A0) * 2, (!A1 && !A0) => PORTC: 0x09
+test "PINA 0x01, 0x01, 0x00, 0x01, 0x01, 0x00 => PORTC: 0x09, state: wait"
 
-# Add tests below
+set state = init
+
+print tmpC
+print state
+setPINA 0x01
+continue 2
+
+print tmpC
+print state
+setPINA 0x01
+continue 2
+
+print tmpC
+print state
+setPINA 0x00
+continue 2
+
+print tmpC
+print state
+setPINA 0x01
+continue 2
+
+print tmpC
+print state
+setPINA 0x01
+continue 2
+
+print tmpC
+print state
+setPINA 0x00
+continue 2
+
+print tmpC
+print state
+expectPORTC 0x09
+expect state wait
+checkResult
 
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
