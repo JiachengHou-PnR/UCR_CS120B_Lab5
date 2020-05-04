@@ -38,7 +38,7 @@ INITDEBUGGER=$(PATHT)initDebugger.gdb
 TESTING=-batch -x $(TESTCOMMANDS) -x $(INITDEBUGGER) -x $(TESTSCRIPT)
 DEBUGGING=-x $(TESTCOMMANDS) -x $(INITDEBUGGER)
 # Programmer
-PROGRAM=avrdude
+PROGRAM=/mnt/e/Desktop/CS_120B/avrdude-6.3/avrdude.exe
 PROGRAMMER=atmelice_isp
 MEMORY=flash
 #mem:op:file where op is (w)rite, (r)ead, (v)erify; performed in the order specified
